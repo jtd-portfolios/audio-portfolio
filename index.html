@@ -1,0 +1,494 @@
+<!--
+  ============================================================
+  AUDIO PORTFOLIO  -  single-file static website
+  ------------------------------------------------------------
+  HOW TO EDIT (look for the word  EDIT  throughout this file):
+   1. Replace "YOUR NAME" everywhere with your real name.
+   2. Swap the project copy for your real project details.
+   3. Add real audio: see the AUDIO note inside each project card.
+   4. Wire up the contact form: see the FORM note near the bottom.
+   5. Update the LinkedIn / X / email links in the Contact section.
+  This is one file. You can host it anywhere (see the chat message).
+  ============================================================
+-->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>JULIA TILTON-DOWN — Audio Editor & Producer</title>
+<meta name="description" content="Portfolio of audio editing, sound design and music production work.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,900;1,9..144,500&family=Manrope:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0c0a09;
+    --bg-2:#13100e;
+    --surface:#1a1512;
+    --surface-2:#221b16;
+    --line:#332821;
+    --ink:#f6efe7;
+    --muted:#a99c8f;
+    --muted-2:#7a6e62;
+    --amber:#f5a623;
+    --amber-soft:#ffce7a;
+    --peak:#ff5b2e;
+    --green:#5fd38d;
+    --maxw:1180px;
+    --ease:cubic-bezier(.16,.84,.34,1);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--bg);
+    color:var(--ink);
+    font-family:'Manrope',sans-serif;
+    line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  /* grain + glow atmosphere */
+  body::before{
+    content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
+    background:
+      radial-gradient(60vw 50vh at 80% -10%, rgba(245,166,35,.16), transparent 60%),
+      radial-gradient(50vw 40vh at -10% 30%, rgba(255,91,46,.08), transparent 55%);
+  }
+  body::after{
+    content:"";position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.05;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 28px;position:relative;z-index:2}
+  a{color:inherit;text-decoration:none}
+  .mono{font-family:'Space Mono',monospace;letter-spacing:.04em}
+  .tag{
+    display:inline-flex;align-items:center;gap:.5em;
+    font-family:'Space Mono',monospace;font-size:.7rem;letter-spacing:.18em;
+    text-transform:uppercase;color:var(--amber);
+  }
+  .tag::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--amber);box-shadow:0 0 10px var(--amber)}
+
+  /* ---------- NAV ---------- */
+  header{
+    position:sticky;top:0;z-index:50;
+    backdrop-filter:blur(14px);
+    background:linear-gradient(to bottom, rgba(12,10,9,.92), rgba(12,10,9,.55));
+    border-bottom:1px solid var(--line);
+  }
+  nav{display:flex;align-items:center;justify-content:space-between;height:68px}
+  .logo{font-family:'Fraunces',serif;font-weight:900;font-size:1.15rem;letter-spacing:.01em;display:flex;align-items:center;gap:10px}
+  .logo .dot{width:9px;height:9px;background:var(--amber);border-radius:2px;box-shadow:0 0 12px var(--amber);animation:pulse 1.6s var(--ease) infinite}
+  @keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.7)}}
+  .navlinks{display:flex;gap:30px;align-items:center}
+  .navlinks a{font-size:.82rem;letter-spacing:.06em;color:var(--muted);text-transform:uppercase;font-weight:600;transition:color .25s}
+  .navlinks a:hover{color:var(--ink)}
+  .nav-cta{border:1px solid var(--line);padding:9px 16px;border-radius:999px;color:var(--ink)!important;transition:.3s var(--ease)}
+  .nav-cta:hover{background:var(--amber);color:#1a0f00!important;border-color:var(--amber)}
+  .burger{display:none;background:none;border:0;color:var(--ink);font-size:1.5rem;cursor:pointer}
+  @media(max-width:760px){
+    .navlinks{display:none;position:absolute;top:68px;left:0;right:0;flex-direction:column;gap:0;background:var(--bg-2);border-bottom:1px solid var(--line);padding:8px 0}
+    .navlinks.open{display:flex}
+    .navlinks a{padding:14px 28px;width:100%}
+    .burger{display:block}
+  }
+
+  /* ---------- HERO ---------- */
+  .hero{position:relative;padding:90px 0 70px;border-bottom:1px solid var(--line);overflow:hidden}
+  .hero .wrap{display:grid;gap:26px}
+  .hero h1{
+    font-family:'Fraunces',serif;font-weight:900;line-height:.92;
+    font-size:clamp(2.9rem,9vw,7rem);letter-spacing:-.02em;
+  }
+  .hero h1 em{font-style:italic;font-weight:500;color:var(--amber)}
+  /* static shadowed waveform behind headline */
+  .h1-wrap{position:relative;display:inline-block;justify-self:start;max-width:100%}
+  .h1-wrap h1{position:relative;z-index:1}
+  .hero-wave-bg{position:absolute;left:-4%;top:50%;transform:translateY(-50%);width:108%;height:155%;z-index:0;opacity:.32;pointer-events:none}
+  .hero .role{font-size:clamp(1.05rem,2.4vw,1.4rem);color:var(--muted);max-width:44ch}
+  .hero .role strong{color:var(--ink);font-weight:600}
+  .hero-cta{display:flex;gap:14px;flex-wrap:wrap;margin-top:6px}
+  .btn{
+    display:inline-flex;align-items:center;gap:10px;padding:14px 26px;border-radius:999px;
+    font-weight:700;font-size:.92rem;cursor:pointer;border:1px solid transparent;transition:.3s var(--ease)
+  }
+  .btn-primary{background:var(--amber);color:#1a0f00}
+  .btn-primary:hover{transform:translateY(-2px);box-shadow:0 12px 34px -10px rgba(245,166,35,.6)}
+  .btn-ghost{border-color:var(--line);color:var(--ink)}
+  .btn-ghost:hover{border-color:var(--amber);color:var(--amber)}
+  /* animated waveform */
+  .waveform{display:flex;align-items:center;gap:4px;height:120px;margin-top:10px}
+  .waveform span{
+    flex:1;border-radius:3px;
+    background:linear-gradient(to top,var(--amber),var(--amber-soft));
+    opacity:.85;animation:bar 1.4s ease-in-out infinite;
+    transform-origin:bottom;
+  }
+  @keyframes bar{0%,100%{transform:scaleY(.18)}50%{transform:scaleY(1)}}
+
+  /* ---------- SECTIONS ---------- */
+  section{padding:86px 0;position:relative}
+  .section-head{display:flex;flex-direction:column;gap:14px;margin-bottom:48px;max-width:62ch}
+  .section-head h2{font-family:'Fraunces',serif;font-weight:900;font-size:clamp(2rem,5vw,3.2rem);line-height:1;letter-spacing:-.02em}
+  .section-head p{color:var(--muted);font-size:1.05rem}
+
+  /* about */
+  .about-grid{display:grid;grid-template-columns:1.3fr .9fr;gap:48px;align-items:start}
+  @media(max-width:840px){.about-grid{grid-template-columns:1fr;gap:36px}}
+  .about-grid p{color:var(--muted);margin-bottom:18px;font-size:1.06rem}
+  .about-grid p strong{color:var(--ink);font-weight:600}
+  .stat-card{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:26px;display:grid;gap:20px}
+  .stat{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px dashed var(--line);padding-bottom:14px}
+  .stat:last-child{border-bottom:0;padding-bottom:0}
+  .stat .k{font-family:'Space Mono',monospace;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted-2)}
+  .stat .v{font-family:'Fraunces',serif;font-weight:600;font-size:1.05rem}
+
+  /* tools / proficiency */
+  .tools{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
+  @media(max-width:640px){.tools{grid-template-columns:1fr}}
+  .tool{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:22px 24px;transition:.35s var(--ease)}
+  .tool:hover{border-color:var(--amber);transform:translateY(-3px)}
+  .tool-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}
+  .tool-name{font-family:'Fraunces',serif;font-weight:600;font-size:1.25rem}
+  .tool-lvl{font-family:'Space Mono',monospace;font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;color:var(--amber)}
+  .meter{display:flex;gap:3px;height:14px}
+  .meter i{flex:1;border-radius:2px;background:var(--surface-2)}
+  .meter i.on{background:linear-gradient(to top,var(--green),var(--amber))}
+  .meter i.peak{background:var(--peak)}
+  .tool small{display:block;margin-top:12px;color:var(--muted-2);font-size:.85rem}
+
+  /* projects */
+  .projects{display:grid;gap:26px}
+  .project{
+    background:linear-gradient(180deg,var(--surface),var(--bg-2));
+    border:1px solid var(--line);border-radius:22px;overflow:hidden;
+    display:grid;grid-template-columns:1fr;transition:.4s var(--ease)
+  }
+  .project:hover{border-color:var(--amber);box-shadow:0 24px 60px -30px rgba(0,0,0,.8)}
+  .project-body{padding:34px 36px}
+  @media(max-width:640px){.project-body{padding:26px 22px}}
+  .project-meta{display:flex;align-items:center;gap:16px;flex-wrap:wrap;margin-bottom:16px}
+  .pill{font-family:'Space Mono',monospace;font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;padding:6px 12px;border:1px solid var(--line);border-radius:999px;color:var(--amber-soft)}
+  .num{font-family:'Space Mono',monospace;color:var(--muted-2);font-size:.78rem;letter-spacing:.1em}
+  .project h3{font-family:'Fraunces',serif;font-weight:900;font-size:clamp(1.5rem,3.5vw,2.1rem);line-height:1.05;margin-bottom:14px;letter-spacing:-.01em}
+  .project p{color:var(--muted);margin-bottom:18px;max-width:70ch}
+  .chips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:22px}
+  .chip{font-size:.78rem;color:var(--muted);background:var(--surface-2);border:1px solid var(--line);padding:5px 12px;border-radius:8px}
+  /* custom audio styling */
+  .player{display:flex;align-items:center;gap:14px;background:var(--bg);border:1px solid var(--line);border-radius:14px;padding:14px 16px}
+  .player .mini-wave{display:flex;align-items:center;gap:3px;height:28px;flex:1}
+  .player .mini-wave span{flex:1;background:var(--line);border-radius:2px;height:30%}
+  audio{width:100%;height:40px;filter:sepia(.2) hue-rotate(330deg) saturate(1.4)}
+  .audio-note{font-size:.8rem;color:var(--muted-2);margin-top:10px}
+  .session-shot{display:block;margin-top:14px;border:1px solid rgba(255,255,255,.1);border-radius:8px;overflow:hidden;line-height:0;box-shadow:0 6px 24px rgba(0,0,0,.4);transition:border-color .25s ease,transform .25s ease}
+  .session-shot:hover{border-color:var(--amber);transform:translateY(-2px)}
+  .session-shot img{width:100%;height:auto;display:block}
+
+  /* familiar-with strip */
+  .familiar{margin-top:30px;background:var(--surface);border:1px dashed var(--line);border-radius:16px;padding:24px 28px}
+  .familiar h4{font-family:'Space Mono',monospace;font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;color:var(--muted-2);margin-bottom:10px}
+  .familiar p{color:var(--muted);font-size:.98rem}
+
+  /* contact */
+  .contact-grid{display:grid;grid-template-columns:1fr;gap:48px;align-items:start}
+  @media(max-width:840px){.contact-grid{grid-template-columns:1fr;gap:36px}}
+  .contact-intro p{color:var(--muted);font-size:1.08rem;margin-bottom:24px;max-width:42ch}
+  .links{display:grid;gap:14px;max-width:440px}
+  .links a{display:flex;align-items:center;justify-content:space-between;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:16px 20px;transition:.3s var(--ease)}
+  .links a:hover{border-color:var(--amber);transform:translateX(4px)}
+  .links a .label{font-weight:600}
+  .links a .val{font-family:'Space Mono',monospace;font-size:.82rem;color:var(--muted)}
+  form{background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:30px}
+  /* footer */
+  footer{border-top:1px solid var(--line);padding:40px 0;color:var(--muted-2)}
+  footer .wrap{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;font-size:.85rem}
+
+  /* reveal animation */
+  .reveal{opacity:0;transform:translateY(26px);transition:opacity .8s var(--ease),transform .8s var(--ease)}
+  .reveal.in{opacity:1;transform:none}
+</style>
+</head>
+<body>
+
+<!-- ================= NAV ================= -->
+<header>
+  <div class="wrap">
+    <nav>
+      <a class="logo" href="#top"><span class="dot"></span>JULIA TILTON-DOWN</a>
+      <div class="navlinks" id="menu">
+        <a href="#about">About</a>
+        <a href="#tools">Tools</a>
+        <a href="#work">Work</a>
+        <a class="nav-cta" href="#contact">Get in touch</a>
+      </div>
+      <button class="burger" id="burger" aria-label="Menu">≡</button>
+    </nav>
+  </div>
+</header>
+
+<!-- ================= HERO ================= -->
+<section class="hero" id="top" style="padding-top:64px">
+  <div class="wrap">
+    <span class="tag mono reveal">Audio Editor · Sound · Music Production</span>
+    <div class="h1-wrap reveal">
+      <svg class="hero-wave-bg" viewBox="0 0 1200 280" preserveAspectRatio="none" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="hwg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffce7a"/><stop offset="1" stop-color="#f5a623"/></linearGradient><filter id="hws" x="-30%" y="-40%" width="160%" height="180%"><feDropShadow dx="0" dy="8" stdDeviation="8" flood-color="#000000" flood-opacity="0.55"/></filter></defs><g filter="url(#hws)" fill="url(#hwg)"><rect x="18" y="86" width="9" height="108" rx="3.5"/><rect x="36" y="108" width="9" height="64" rx="3.5"/><rect x="54" y="76" width="9" height="127" rx="3.5"/><rect x="72" y="44" width="9" height="192" rx="3.5"/><rect x="90" y="121" width="9" height="38" rx="3.5"/><rect x="108" y="118" width="9" height="44" rx="3.5"/><rect x="126" y="22" width="9" height="236" rx="3.5"/><rect x="144" y="58" width="9" height="163" rx="3.5"/><rect x="162" y="115" width="9" height="50" rx="3.5"/><rect x="180" y="80" width="9" height="119" rx="3.5"/><rect x="198" y="52" width="9" height="175" rx="3.5"/><rect x="216" y="120" width="9" height="40" rx="3.5"/><rect x="234" y="62" width="9" height="155" rx="3.5"/><rect x="252" y="100" width="9" height="80" rx="3.5"/><rect x="270" y="122" width="9" height="35" rx="3.5"/><rect x="288" y="116" width="9" height="48" rx="3.5"/><rect x="306" y="72" width="9" height="137" rx="3.5"/><rect x="324" y="74" width="9" height="133" rx="3.5"/><rect x="342" y="118" width="9" height="43" rx="3.5"/><rect x="360" y="96" width="9" height="87" rx="3.5"/><rect x="378" y="116" width="9" height="49" rx="3.5"/><rect x="396" y="56" width="9" height="167" rx="3.5"/><rect x="414" y="73" width="9" height="134" rx="3.5"/><rect x="432" y="120" width="9" height="41" rx="3.5"/><rect x="450" y="22" width="9" height="237" rx="3.5"/><rect x="468" y="55" width="9" height="170" rx="3.5"/><rect x="486" y="112" width="9" height="57" rx="3.5"/><rect x="504" y="98" width="9" height="83" rx="3.5"/><rect x="522" y="46" width="9" height="187" rx="3.5"/><rect x="540" y="47" width="9" height="186" rx="3.5"/><rect x="558" y="52" width="9" height="175" rx="3.5"/><rect x="576" y="120" width="9" height="41" rx="3.5"/><rect x="594" y="54" width="9" height="173" rx="3.5"/><rect x="612" y="52" width="9" height="175" rx="3.5"/><rect x="630" y="76" width="9" height="127" rx="3.5"/><rect x="648" y="121" width="9" height="38" rx="3.5"/><rect x="666" y="99" width="9" height="82" rx="3.5"/><rect x="684" y="122" width="9" height="37" rx="3.5"/><rect x="702" y="56" width="9" height="168" rx="3.5"/><rect x="720" y="18" width="9" height="245" rx="3.5"/><rect x="738" y="110" width="9" height="60" rx="3.5"/><rect x="756" y="90" width="9" height="100" rx="3.5"/><rect x="774" y="74" width="9" height="133" rx="3.5"/><rect x="792" y="109" width="9" height="62" rx="3.5"/><rect x="810" y="58" width="9" height="164" rx="3.5"/><rect x="828" y="112" width="9" height="56" rx="3.5"/><rect x="846" y="54" width="9" height="172" rx="3.5"/><rect x="864" y="88" width="9" height="104" rx="3.5"/><rect x="882" y="56" width="9" height="169" rx="3.5"/><rect x="900" y="23" width="9" height="234" rx="3.5"/><rect x="918" y="40" width="9" height="200" rx="3.5"/><rect x="936" y="104" width="9" height="72" rx="3.5"/><rect x="954" y="114" width="9" height="52" rx="3.5"/><rect x="972" y="53" width="9" height="174" rx="3.5"/><rect x="990" y="54" width="9" height="172" rx="3.5"/><rect x="1008" y="46" width="9" height="189" rx="3.5"/><rect x="1026" y="103" width="9" height="74" rx="3.5"/><rect x="1044" y="80" width="9" height="121" rx="3.5"/><rect x="1062" y="115" width="9" height="50" rx="3.5"/><rect x="1080" y="57" width="9" height="166" rx="3.5"/><rect x="1098" y="36" width="9" height="208" rx="3.5"/><rect x="1116" y="119" width="9" height="42" rx="3.5"/><rect x="1134" y="55" width="9" height="170" rx="3.5"/><rect x="1152" y="120" width="9" height="41" rx="3.5"/><rect x="1170" y="48" width="9" height="184" rx="3.5"/></g></svg>
+      <h1>Shaping sound,<br><em>frame by frame.</em></h1>
+    </div>
+    <p class="role reveal">I edit, mix and produce audio with a careful ear for clarity and detail — from <strong>dialogue cleanup and noise reduction</strong> to <strong>original music production</strong>. This is a selection of work across the tools I use every day.</p>
+    <div class="hero-cta reveal">
+      <a class="btn btn-primary" href="#work">▶ Hear the work</a>
+      <a class="btn btn-ghost" href="#contact">Contact me</a>
+    </div>
+    <div class="waveform reveal" id="wave" aria-hidden="true"></div>
+  </div>
+</section>
+
+<!-- ================= ABOUT ================= -->
+<section id="about">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="tag mono">01 — About</span>
+      <h2>A great ear, a steady hand on the fader.</h2>
+    </div>
+    <div class="about-grid">
+      <div class="reveal">
+        <!-- EDIT: rewrite this bio in your own voice -->
+        <p>I'm an audio editor and producer who cares about how things <strong>sound</strong> — and why. My work spans post-production cleanup, multitrack mixing, sound design and original composition, with a focus on delivering clear, professional, broadcast-ready audio.</p>
+        <p>I work fluently across both <strong>destructive/waveform editors</strong> and full <strong>DAWs</strong>, and I'm comfortable with the whole chain: recording, EQ, noise reduction, spectral repair, mixing and mastering. I pay close attention to acoustics, signal flow and the small artifacts most listeners never notice — but always feel.</p>
+        <p>I'm currently looking for work where a sharp ear and meticulous editing make a real difference — including evaluating, annotating and refining audio quality at a high standard.</p>
+      </div>
+      <div class="stat-card reveal">
+        <div class="stat"><span class="k">Focus</span><span class="v">Editing · Mixing · Production</span></div>
+        <div class="stat"><span class="k">Core skills</span><span class="v">EQ · Noise reduction · Spectral repair</span></div>
+        <div class="stat"><span class="k">Strengths</span><span class="v">Waveform analysis · Mastering</span></div>
+        <div class="stat"><span class="k">Workflow</span><span class="v">Windows · Cloud DAWs</span></div>
+        <div class="stat"><span class="k">Status</span><span class="v">Open to opportunities</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= TOOLS ================= -->
+<section id="tools" style="background:var(--bg-2);border-top:1px solid var(--line);border-bottom:1px solid var(--line)">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="tag mono">02 — Toolkit</span>
+      <h2>Software I work in.</h2>
+      <p>Hands-on across waveform editors, full DAWs and cloud production tools. The meters below reflect how I'd rate my own working proficiency.</p>
+    </div>
+    <div class="tools">
+      <!-- Each meter: add class "on" to lit bars, "peak" for the top one. -->
+      <div class="tool reveal">
+        <div class="tool-top"><span class="tool-name">Audacity</span><span class="tool-lvl">Advanced</span></div>
+        <div class="meter"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="peak"></i></div>
+        <small>Recording, editing, noise reduction, restoration &amp; export.</small>
+      </div>
+      <div class="tool reveal">
+        <div class="tool-top"><span class="tool-name">FL Studio</span><span class="tool-lvl">Proficient</span></div>
+        <div class="meter"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="peak"></i><i></i><i></i></div>
+        <small>Beat-making, arrangement, mixing &amp; original production.</small>
+      </div>
+      <div class="tool reveal">
+        <div class="tool-top"><span class="tool-name">Adobe Audition</span><span class="tool-lvl">Advanced</span></div>
+        <div class="meter"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="peak"></i><i></i></div>
+        <small>Multitrack mixing, spectral repair &amp; dialogue cleanup.</small>
+      </div>
+      <div class="tool reveal">
+        <div class="tool-top"><span class="tool-name">Soundation</span><span class="tool-lvl">Proficient</span></div>
+        <div class="meter"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="peak"></i><i></i><i></i><i></i></div>
+        <small>Cloud-based production &amp; collaborative arrangement.</small>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= WORK ================= -->
+<section id="work">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="tag mono">03 — Selected Work</span>
+      <h2>Projects &amp; productions.</h2>
+      <p>A cross-section of editing and production work. Each piece notes the tool used and the techniques involved.</p>
+    </div>
+
+    <div class="projects">
+
+      <!-- ========== PROJECT 1 ========== -->
+      <article class="project reveal">
+        <div class="project-body">
+          <div class="project-meta">
+            <span class="num">P/01</span>
+            <span class="pill">Audacity</span>
+            <span class="pill">Click Removal · Restoration</span>
+          </div>
+          <h3>Spoken-Word Edit &amp; Noise Cleanup</h3>
+          <p>A live gameplay voice capture cleaned end to end — the first 30 seconds is the raw recording, then the finished result. Keyboard and mouse clicks removed with noise reduction, spectral editing, phase inversion, and timeline edits, while preserving the natural speaking voice.</p>
+          <div class="chips">
+            <span class="chip">Noise reduction</span>
+            <span class="chip">Spectral editing</span>
+            <span class="chip">Phase inversion</span>
+            <span class="chip">Click removal</span>
+          </div>
+          <audio controls preload="none" src="noise-cleanup.mp3">Your browser does not support audio.</audio>
+          <p class="audio-note">Gameplay voice capture — before &amp; after noise cleanup.</p>
+        </div>
+      </article>
+
+      <!-- ========== PROJECT 2 ========== -->
+      <article class="project reveal">
+        <div class="project-body">
+          <div class="project-meta">
+            <span class="num">P/02</span>
+            <span class="pill">Soundation</span>
+            <span class="pill">Cloud DAW</span>
+          </div>
+          <h3>Triumphant Christmas March</h3>
+          <p>An original composition — "Triumphant Christmas March" — produced in Soundation's browser DAW, arranging instruments and effects in a fully cloud-based workflow. A finished piece showing comfort with modern, web-native production tools.</p>
+          <div class="chips">
+            <span class="chip">Original composition</span>
+            <span class="chip">Cloud DAW</span>
+            <span class="chip">Arrangement</span>
+            <span class="chip">Effects</span>
+          </div>
+          <audio controls preload="none" src="triumphant-christmas-march.mp3">Your browser does not support audio.</audio>
+          <p class="audio-note">Original composition, produced in Soundation.</p>
+        </div>
+      </article>
+
+      <!-- ========== PROJECT 3 ========== -->
+      <article class="project reveal">
+        <div class="project-body">
+          <div class="project-meta">
+            <span class="num">P/03</span>
+            <span class="pill">Adobe Audition</span>
+            <span class="pill">Personal Project</span>
+            <span class="pill">Mashups &amp; Compilations</span>
+          </div>
+          <h3>Mashups &amp; Audio Compilations</h3>
+          <p>An ongoing series of hobby edits built over years — blending and layering tracks into mashups and stitching clips into seamless compilations. Beatmatching, tempo and key alignment, clean crossfades and transitions: the self-driven practice that keeps my ear sharp for timing and balance.</p>
+          <div class="chips">
+            <span class="chip">Beatmatching</span>
+            <span class="chip">Crossfades &amp; transitions</span>
+            <span class="chip">Arrangement</span>
+            <span class="chip">Editing &amp; layering</span>
+          </div>
+          <audio controls preload="none" src="kesha-mashup-clean.mp3">Your browser does not support audio.</audio>
+          <p class="audio-note">All That Matters Is Being Boy Crazy — a Kesha mashup (clean radio edit).</p>
+          <a class="session-shot" href="mashup-session.png" target="_blank" rel="noopener" title="Open full size">
+            <img src="mashup-session.png" alt="Adobe Audition multitrack session for the mashup — six tracks of waveforms with EQ, automation, markers, and time-stretching" loading="lazy">
+          </a>
+          <p class="audio-note">Inside the Adobe Audition session — six tracks of EQ, automation, dozens of markers, and time-stretched stems. Click to enlarge.</p>
+        </div>
+      </article>
+
+      <!-- ========== PROJECT 4 ========== -->
+      <article class="project reveal">
+        <div class="project-body">
+          <div class="project-meta">
+            <span class="num">P/04</span>
+            <span class="pill">Adobe Audition</span>
+            <span class="pill">Multitrack Mix</span>
+            <span class="pill" style="border-color:var(--amber);color:var(--amber)">In progress</span>
+          </div>
+          <h3>Multitrack Voiceover Mix</h3>
+          <p>Built and balanced a multitrack session in Audition — EQ, compression and de-essing across voice tracks, with music and effects beds layered underneath. Focused on intelligibility and a smooth, professional final mix.</p>
+          <div class="chips">
+            <span class="chip">Multitrack</span>
+            <span class="chip">EQ &amp; compression</span>
+            <span class="chip">De-essing</span>
+            <span class="chip">Mixing</span>
+          </div>
+          <p class="audio-note">Work in progress — audio sample coming soon.</p>
+        </div>
+      </article>
+
+      <!-- ========== PROJECT 5 ========== -->
+      <article class="project reveal">
+        <div class="project-body">
+          <div class="project-meta">
+            <span class="num">P/05</span>
+            <span class="pill">Adobe Audition</span>
+            <span class="pill">Spectral Repair</span>
+            <span class="pill" style="border-color:var(--amber);color:var(--amber)">In progress</span>
+          </div>
+          <h3>Dialogue Cleanup &amp; Spectral Repair</h3>
+          <p>Rescued a noisy dialogue recording using Audition's spectral frequency display — isolating and removing background interference, clicks and unwanted tones without damaging the voice. A detail-driven, waveform-and-spectrogram editing job.</p>
+          <div class="chips">
+            <span class="chip">Spectral editing</span>
+            <span class="chip">Waveform analysis</span>
+            <span class="chip">Dialogue isolation</span>
+            <span class="chip">Restoration</span>
+          </div>
+          <p class="audio-note">Work in progress — audio sample coming soon.</p>
+        </div>
+      </article>
+
+
+
+    </div>
+
+    <!-- familiar-with strip -->
+    <div class="familiar reveal">
+      <h4>Also working in</h4>
+      <p>Familiar with <strong style="color:var(--ink)">Ableton Live</strong> and <strong style="color:var(--ink)">Reaper</strong> — exploring both as part of broadening my production and editing workflow.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= CONTACT ================= -->
+<section id="contact" style="background:var(--bg-2);border-top:1px solid var(--line)">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="tag mono">04 — Contact</span>
+      <h2>Let's make something sound great.</h2>
+    </div>
+    <div class="contact-grid">
+      <div class="contact-intro reveal">
+        <p>Got a project, a role, or just want to talk audio? Send a note and I'll get back to you.</p>
+        <div class="links">
+          <!-- EDIT all links/emails below -->
+          <a href="mailto:j.ann.tilton@gmail.com"><span class="label">Email</span><span class="val">j.ann.tilton@gmail.com</span></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span>© <span id="yr"></span> JULIA TILTON-DOWN — Audio Editor &amp; Producer</span>
+    <span class="mono">Built for the ears.</span>
+  </div>
+</footer>
+
+<script>
+  // year
+  document.getElementById('yr').textContent = new Date().getFullYear();
+
+  // mobile menu
+  const burger = document.getElementById('burger');
+  const menu = document.getElementById('menu');
+  burger.addEventListener('click', () => menu.classList.toggle('open'));
+  menu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => menu.classList.remove('open')));
+
+  // build hero waveform bars with randomized animation timing
+  const wave = document.getElementById('wave');
+  const N = 64;
+  for (let i = 0; i < N; i++) {
+    const s = document.createElement('span');
+    s.style.animationDelay = (Math.random() * 1.4).toFixed(2) + 's';
+    s.style.animationDuration = (1 + Math.random() * 0.9).toFixed(2) + 's';
+    wave.appendChild(s);
+  }
+
+  // scroll reveal
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target);} });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.reveal').forEach((el, i) => {
+    el.style.transitionDelay = (Math.min(i, 6) * 0.05) + 's';
+    io.observe(el);
+  });
+</script>
+</body>
+</html>
